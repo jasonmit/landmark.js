@@ -1,21 +1,33 @@
 ;(function ($, win, doc) {
-	$.fn.landmark = function (cb) {
-		var id = 'landmarkjs';
-
-		if(document.getElementById(id)) {
-			console.error("!! landmark.js -> already was rendered");
-			return false;
-		}
+	$.fn.landmark = function (opts) {
+		var settings = $.extend({ 'id' : 'landmarkjs' }, opts);
 		
+		if(opts) {
+			if(typeof opts.id === 'undefined' && document.getElementById(settings.id)) {
+				console.error("!! landmark.js -> already was rendered");
+				return false;
+			}
+			else if(opts.id && !doc.getElementById(settings.id)) {
+				console.error("!! landmark.js -> landmark element id ", settings.id, " does not exist");
+				return false;
+			}
+		}
+
 		var anchors = [], 
 			onScroll,
-			isDrawn = false,
-			div = doc.createElement('div');
+			isDrawn = opts && typeof opts.id !== 'undefined',
+			div;
 
-		div.setAttribute('id', id);
-		div.className = 'landmark-tip';
-		div.style.display = 'none';
-		doc.getElementsByTagName('body')[0].appendChild(div);
+		if(!isDrawn) {
+			console.log('Does not exist, creating');
+			div = doc.createElement('div');
+			div.setAttribute('id', settings.id);
+			div.className = 'landmark-tip';
+			div.style.display = 'none';
+			doc.getElementsByTagName('body')[0].appendChild(div);
+		} else {			
+			div = doc.getElementById(settings.id);
+		}
 
 		this.each(function () {
 			var $this = $(this);
@@ -46,8 +58,6 @@
 				div.style.display = 'block';
 				isDrawn = true;
 			}
-
-			if(cb && typeof cb === 'function') cb(closest);
 		};
 
 		win.onscroll = onScroll; /* todo: this can be debounced */
