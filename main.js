@@ -4,7 +4,7 @@
 		
 		if(opts) {
 			if(typeof opts.id === 'undefined' && document.getElementById(settings.id)) {
-				console.error("!! landmark.js -> already was rendered");
+				console.error("!! landmark.js -> was already rendered on this object");
 				return false;
 			}
 			else if(opts.id && !doc.getElementById(settings.id)) {
@@ -16,26 +16,23 @@
 		var anchors = [], 
 			onScroll,
 			isDrawn = opts && typeof opts.id !== 'undefined',
-			div;
+			el,
+			innerText;
 
 		if(!isDrawn) {
-			console.log('Does not exist, creating');
-			div = doc.createElement('div');
-			div.setAttribute('id', settings.id);
-			div.className = 'landmark-tip';
-			div.style.display = 'none';
-			doc.getElementsByTagName('body')[0].appendChild(div);
-		} else {			
-			div = doc.getElementById(settings.id);
+			el = doc.createElement('div');
+			el.setAttribute('id', settings.id);
+			el.className = 'landmark-tip';
+			el.style.display = 'none';
+			doc.getElementsByTagName('body')[0].appendChild(el);
+		} 
+		else {			
+			el = doc.getElementById(settings.id);
 		}
 
 		this.each(function () {
 			var $this = $(this);
-
-			anchors.push({ 
-				id: $this.attr('id'), 
-				y: $this[0].offsetTop + $this[0].offsetHeight 
-			});
+			anchors.push({ id: $this.attr('id'), y: $this[0].offsetTop + $this[0].offsetHeight });
 		});
 
 		onScroll = function (e) {
@@ -45,17 +42,17 @@
 				closest = {};
 
 			anchors.forEach(function (o) {
-				o.diff = Math.abs(o.y - top); 
+				o.diff = Math.abs(o.y - top);
 
-				if(typeof closest.diff === 'undefined' || o.diff < closest.diff) {
+				if(typeof closest.diff === 'undefined' || o.diff < closest.diff && top > o.y) {
 					closest = o;
 				}
 			});
-
-			div.textContent = $('#' + closest.id).data('anchor');
+ 
+			el['textContent' || 'innerText'] = $('#' + closest.id).data('anchor');
 			
 			if(!isDrawn) {
-				div.style.display = 'block';
+				el.style.display = 'block';
 				isDrawn = true;
 			}
 		};
