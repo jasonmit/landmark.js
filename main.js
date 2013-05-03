@@ -1,6 +1,12 @@
 ;(function ($, win, doc) {
 	$.fn.landmark = function (opts) {
-		var settings = $.extend({ 'id' : 'landmarkjs' }, opts);
+		var settings = $.extend({ 'id' : 'landmarkjs' }, opts),
+			isDrawn = false,
+			anchors = [], 
+			onScroll,
+			el,
+			$el,
+			innerText;
 		
 		if(opts) {
 			if(typeof opts.id === 'undefined' && document.getElementById(settings.id)) {
@@ -11,13 +17,10 @@
 				console.error("!! landmark.js -> landmark element id ", settings.id, " does not exist");
 				return false;
 			}
+			else if(typeof opts.id !== 'undefined') {
+				isDrawn = true;
+			}
 		}
-
-		var anchors = [], 
-			onScroll,
-			isDrawn = opts && typeof opts.id !== 'undefined',
-			el,
-			innerText;
 
 		if(!isDrawn) {
 			el = doc.createElement('div');
@@ -29,6 +32,8 @@
 		else {			
 			el = doc.getElementById(settings.id);
 		}
+
+		$el = $(el); // cache it for later
 
 		this.each(function () {
 			var $this = $(this);
@@ -49,7 +54,7 @@
 				}
 			});
  
-			el['textContent' || 'innerText'] = $('#' + closest.id).data('anchor');
+			$el.text($('#' + closest.id).data('anchor'));
 			
 			if(!isDrawn) {
 				el.style.display = 'block';
