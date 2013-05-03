@@ -37,7 +37,12 @@
 
 		this.each(function () {
 			var $this = $(this);
-			anchors.push({ id: $this.attr('id'), y: $this[0].offsetTop + $this[0].offsetHeight });
+			
+			anchors.push({ 
+				id: $this.attr('id'), 
+				y: $this[0].offsetTop + $this[0].offsetHeight,
+				$el: $this 
+			});
 		});
 
 		onScroll = function (e) {
@@ -53,8 +58,8 @@
 					closest = o;
 				}
 			});
- 
-			$el.text($('#' + closest.id).data('anchor'));
+ 			
+			$el.text(closest.$el.data('anchor'));
 			
 			if(!isDrawn) {
 				el.style.display = 'block';
