@@ -4,7 +4,7 @@ Landmark.js is a simple, light-weight, jquery plugin that allows you to display,
 It's useful for notifying the user of the context of what they're reading if your page covers multiple topics.  This allows for the user to rapidly scroll through your document to get to what they interested in.
 
 ## Demo
-http://codepen.io/anon/pen/lHGId
+http://codepen.io/anon/pen/lHGId?editors=100
 
 ## Usage
 	$(document).ready(function() {
