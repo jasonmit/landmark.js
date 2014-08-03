@@ -1,8 +1,10 @@
 # Landmark.js
-Landmark.js is a simple, light-weight, jquery plugin that allows you to display, what I call, "landmarks" as the user passes them while scrolling.
+Landmark.js is a simple, light-weight, jquery plugin that allows you to display, what I call, "landmarks" as the user passes them while scrolling. 
 
-It's useful for notifying the user of the context of what they're reading if your page covers multiple topics.  This allows for the user to rapidly scroll
-through your document to get to what they interested in. 
+It's useful for notifying the user of the context of what they're reading if your page covers multiple topics.  This allows for the user to rapidly scroll through your document to get to what they interested in.
+
+## Demo
+http://codepen.io/anon/pen/lHGId
 
 ## Usage
 	$(document).ready(function() {
